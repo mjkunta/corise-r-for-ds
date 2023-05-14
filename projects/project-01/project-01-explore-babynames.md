@@ -356,6 +356,10 @@ tbl_names_by_letter |>
        x = 'first letter',
        y = '% of birth names') +
   
+<<<<<<< HEAD
+=======
+  
+>>>>>>> 6c375ec3dbac7a77903c30d082c95eeb9c35df56
   # Fix scales of y axis
   scale_y_continuous(
     expand = c(0, 0),
@@ -425,6 +429,10 @@ tbl_names_by_first_and_last_letter = tbl_names |>
   group_by(first_letter, last_letter, year) |> 
   # Summarize total number of births
   summarize(nb_births = sum(nb_births), .groups = 'drop') |> 
+<<<<<<< HEAD
+=======
+  
+>>>>>>> 6c375ec3dbac7a77903c30d082c95eeb9c35df56
   
   # Group by `year`
   group_by(year) |> 
@@ -471,6 +479,10 @@ tbl_names_by_first_and_last_letter |>
        x = 'first letter',
        y = 'last letter') +
  
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6c375ec3dbac7a77903c30d082c95eeb9c35df56
   # Update fill scale to use Viridis colors
   scale_fill_viridis_b(direction = -1) +
   # Update plotting theme
@@ -519,6 +531,10 @@ tbl_names_vowel_consonant <- tbl_names |>
   group_by(sex, year,first_letter_type, last_letter_type) |> 
   # Summarize the total number of births
   summarize(nb_birth = sum(nb_births), .groups = 'drop') |> 
+<<<<<<< HEAD
+=======
+  
+>>>>>>> 6c375ec3dbac7a77903c30d082c95eeb9c35df56
   
   # Group by `sex` and` `year`
   group_by(sex, year) |> 
@@ -571,6 +587,10 @@ tbl_names_vowel_consonant |>
        x = 'year',
        y = '% of births') +
   
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6c375ec3dbac7a77903c30d082c95eeb9c35df56
   # Clean up x and y axis scales
   scale_x_continuous(
     expand = c(0, 0)
