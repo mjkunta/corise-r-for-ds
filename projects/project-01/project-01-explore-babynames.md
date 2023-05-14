@@ -27,7 +27,9 @@ the `read_csv` function from the `readr` package to do this.
 ``` r
 # Load the tidyverse package
 library(tidyverse)
-#library(gt)
+library(ggforce)
+library(tidyquant)
+
 # Read the csv file `file_name_names` as data frame `tbl_names`
 file_name_names <- here::here("data/names.csv.gz")
 tbl_names <- readr::read_csv(
@@ -589,6 +591,32 @@ tbl_names_vowel_consonant |>
 ```
 
 <img src="img/question-5-visualize-1.png" width="100%" style="display: block; margin: auto;" />
+
+#### Visualize with a hull plot. X as year, Y as nb_birth
+
+``` r
+tbl_names_vowel_consonant |> 
+  # Reorder `first_last` by the median `pct_births`
+  mutate(first_last = fct_reorder(first_last, pct_births, median)) |>
+  # Initialize a ggplot of `pct_births` vs. `year`
+  ggplot(aes(x = year, y = nb_birth)) + 
+  # Add scatter points
+  geom_point(shape = '.') +
+  # Add an area layer with fill = first_last
+  geom_mark_hull(aes(fill = first_last, label = first_last)) +
+  # Facet wrap plot by `sex`
+  facet_wrap(~sex) + 
+  # Add labels (title, subtitle, caption, x, y)
+  labs(title = 'Distribution of vowel and consonants in Babynames',
+       subtitle = 'Based on first and last letter types',
+       caption = '100+ years of US Babynames',
+       x = 'first_last',
+       y = '# of births') +
+  theme_tq() +
+  scale_fill_tq() 
+```
+
+<img src="img/hull plot for quiz 5-1.png" width="100%" style="display: block; margin: auto;" />
 
 ------------------------------------------------------------------------
 
