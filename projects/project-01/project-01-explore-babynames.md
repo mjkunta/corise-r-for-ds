@@ -29,6 +29,7 @@ the `read_csv` function from the `readr` package to do this.
 library(tidyverse)
 library(ggforce)
 library(tidyquant)
+library(tidytext)
 
 # Read the csv file `file_name_names` as data frame `tbl_names`
 file_name_names <- here::here("data/names.csv.gz")
@@ -372,6 +373,40 @@ tbl_names_by_letter |>
 ```
 
 <img src="img/question-3-visualize-1-1.png" width="100%" style="display: block; margin: auto;" />
+
+#### Switching the axis and reaodering the bars, personal tinkering. For some reason, fct_reorder doesn’t work well with facets, so with a liitle googling I found reorder_within from tidytext could do the job.
+
+``` r
+tbl_names_by_letter |> 
+  # Filter for the year 2020
+   filter(year == 2020) |> 
+  # Reoder by first letter
+  mutate(first_letter = reorder_within(first_letter, pct_births, sex)) |> 
+  # Initialize a ggplot of pct_births vs. first_letter
+  ggplot(aes(x = pct_births, y = first_letter)) + 
+  # Add a column layer using `geom_col()`
+  geom_col() + scale_y_reordered() +
+  # Facet wrap plot by sex
+  facet_wrap(~sex, scales = "free_y") +
+  # Add labels (title, subtitle, x, y)
+  labs(title = '2020 Distribution of births by first letter',
+       subtitle = 'Faceted by sex',
+       x = '% of births',
+       y = 'first letter') +
+
+  # Fix scales of y axis
+  scale_x_continuous(
+    expand = c(0, 0),
+    labels = scales::percent_format(accuracy = 1L)
+  ) +
+  # Update plotting theme
+  theme(
+    plot.title.position = "plot",
+    axis.ticks.x = element_blank(),
+    panel.grid.major.x = element_blank())
+```
+
+<img src="img/question-3-visualize using reorder_within-1.png" width="100%" style="display: block; margin: auto;" />
 
 Write a function that plot trends in the percentage of births for all
 names starting with a specific first letter.
