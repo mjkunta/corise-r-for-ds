@@ -511,12 +511,12 @@ tbl_names_extended_age |>
       yend = name
     ),
     color = "purple",
-    linewidth = 3,
+    linewidth = 2,
     lineend = "round",
     linejoin = "round"
   ) +
   # Add a point layer:
-  geom_point(size = 2, color = "yellow") +
+  geom_point(size = 1, color = "yellow") +
   # Add labels (title, subtitle, x, y)
   labs(
     title = "Age Distribution of Top 25 US Female Names",
